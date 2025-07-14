@@ -1,0 +1,533 @@
+#sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+    padding-bottom: 10px;
+}
+
+
+#navbar {
+    background-color: #0077cc;
+    height: 50px;
+    width: 85%;
+    border-radius: 10px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-top: 1%;
+}
+
+#nav-sik {
+    color: white;
+    font-size: 22px;
+    padding: 8px;
+    margin-left: 10px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+#nav-links {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+
+}
+
+#fln-book {
+    margin-top: 2%;
+    margin-left: 3%;
+}
+
+#fln-book-foundation {
+    color: gray;
+    margin-top: -2px;
+    font-size: 14px;
+}
+
+#select-grade {
+    margin-top: 1.5%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    flex-wrap: wrap;
+
+}
+
+#select-grade label {
+    margin: 0;
+}
+
+#select-grade select {
+    width: 10%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 30px;
+}
+
+#btn-group {
+    display: flex;
+    gap: 10px;
+
+}
+
+#prev-btn {
+    margin-left: 5%;
+    padding: 5px 10px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#prev-btn:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+
+#next-btn {
+    margin-left: 8%;
+    padding: 5px 20px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#next-btn:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+
+
+#jump-to {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 4%;
+
+}
+
+#input-jump {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 30px;
+}
+
+#jump-btn {
+    margin-left: 2%;
+    padding: 3px 10px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    width: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 35px;
+
+
+}
+
+#download {
+    height: 35px;
+    margin-left: 5%;
+    padding: 3px 10px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    width: 200px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#display-container {
+    margin-top: 20px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 4px solid #0077cc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#display {
+    font-family: system-ui;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+
+@keyframes fadeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-slide-in {
+    animation: fadeSlideIn 1s ease-in-out;
+}
+
+
+
+
+
+
+
+/* Phone last  */
+@media (max-width: 767px) {
+    #navbar {
+        height: 40px;
+        width: 90%;
+        margin-top: 5%
+    }
+
+    #nav-sik {
+        font-size: 18px;
+        padding: 4px;
+        margin-bottom: -1px;
+        margin-left: 5px;
+    }
+
+    #nav-links {
+        font-size: 14px;
+    }
+
+    #fln-book {
+        margin-top: 3%;
+        margin-left: 5%;
+        font-size: 16px;
+    }
+
+    #fln-book-foundation {
+        color: gray;
+        margin-top: 2px;
+        margin-left: 1%;
+
+    }
+
+    #select-grade {
+        margin-top: 3%;
+        display: flex;
+        margin-left: 1%;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        white-space: nowrap;
+    }
+
+    #select-grade label {
+        margin: 0;
+    }
+
+    #select-grade select {
+        width: 50%;
+        height: 28px;
+    }
+
+    #btn-group {
+        flex-direction: column;
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-top: 4%;
+        gap: 20px;
+    }
+
+    #prev-btn {
+        width: 40%;
+        margin: auto;
+
+    }
+
+    #next-btn {
+        width: 42%;
+        margin: auto;
+    }
+
+    #jump-to {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 0%;
+        margin-top: 5%;
+
+    }
+
+    #input-jump {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 30px;
+        width: 150%;
+    }
+
+    #jump-btn {
+        margin-left: 2%;
+        padding: 3px 10px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        width: 200px;
+        border-radius: 5px;
+        cursor: pointer;
+        height: 30px
+    }
+
+    #download {
+        height: 35px;
+        margin-left: 20%;
+        padding: 3px 10px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        width: 300px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 5%;
+    }
+
+}
+
+/* Small phone */
+@media (max-width: 480px) {
+    #navbar {
+        margin-top: 5%;
+        height: 35px;
+        width: 85%;
+    }
+
+    #nav-sik {
+        margin-left: -4px;
+        margin-bottom: -1px;
+        font-size: 14px;
+    }
+
+    #nav-links {
+        font-size: 12px;
+    }
+
+    #fln-book {
+        margin-top: 4%;
+        margin-left: 5%;
+        font-size: 10px;
+    }
+
+    #fln-book-foundation {
+        color: gray;
+        margin-top: 2px;
+        margin-left: 1%;
+        font-size: 12px;
+    }
+
+    #select-grade {
+        margin-left: 1%;
+        margin-top: 10%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
+        font-size: 15px;
+    }
+
+    #select-grade label {
+        margin: 0;
+    }
+
+    #select-grade select {
+        width: 40%;
+        height: 25px;
+    }
+
+    #btn-group {
+        flex-direction: column;
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        margin-left: 2%;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5%;
+        gap: 15px;
+    }
+
+    #prev-btn {
+        width: 60%;
+        margin: auto;
+
+    }
+
+    #next-btn {
+        width: 60%;
+        margin: auto;
+    }
+
+    #jump-to {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 0%;
+        margin-top: 5%;
+
+    }
+
+    #input-jump {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 30px;
+        width: 90%;
+    }
+
+    #jump-btn {
+        margin-left: 2%;
+        padding: 3px 10px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        width: 100px;
+        border-radius: 5px;
+        cursor: pointer;
+        height: 30px;
+
+    }
+
+    #download-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #download {
+        height: 35px;
+        margin-left: 10%;
+        padding: 3px 10px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        width: 300px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 5%;
+    }
+
+
+
+
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #navbar {
+        margin-top: 4%;
+        height: 45px;
+    }
+
+    #nav-sik {
+        font-size: 19px;
+        padding: 4px;
+        margin-bottom: -2px;
+        margin-left: 5px;
+    }
+
+    #nav-links {
+        font-size: 15px;
+    }
+
+    #fln-book {
+        margin-top: 3%;
+        margin-left: 7%;
+        font-size: 19px;
+    }
+
+    #fln-book-foundation {
+        color: gray;
+        margin-top: 2px;
+        font-size: 14px;
+        margin-left: 1%;
+    }
+
+    #select-grade {
+        margin-left: 1%;
+        margin-top: 3%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
+        font-size: 16px;
+    }
+
+    #select-grade label {
+        margin: 0;
+    }
+
+    #select-grade select {
+        width: 38%;
+        height: 30px;
+    }
+
+    #jump-to {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 0%;
+        margin-top: 4%;
+
+    }
+
+    #input-jump {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 35px;
+        width: 180%;
+    }
+
+    #jump-btn {
+        margin-left: 2%;
+        padding: 3px 10px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        width: 250px;
+        height: 35px;
+        border-radius: 5px;
+        cursor: pointer;
+
+    }
+
+
+
+    #download {
+        height: 35px;
+        margin-left: 50%;
+        padding: 3px 10px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        width: 300px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10%;
+    }
+
+
+}
