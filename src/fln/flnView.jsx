@@ -14,9 +14,55 @@ function FlnView() {
 
     const days = Array.from({ length: 60 }, (_, i) => i + 1);
 
+    const getGrades = () => {
+        axios.get(`${url}/api/fln/grades`)
+            .then((res) => {
+                setGrades(res.data);
+                const storedGrade = localStorage.getItem("fln_grade");
+                if (res.data.length > 0 && !storedGrade) {
+                    setSelectedGrade(res.data[0]);
+                } else if (storedGrade) {
+                    setSelectedGrade(storedGrade);
+                }
+            })
+            .catch((err) => toast.error("Error fetching grades: " + err.message));
+    };
+
+    const loadProgress = () => {
+        return JSON.parse(localStorage.getItem("fln-progress")) || {};
+    };
+
+    const saveProgress = (data) => {
+        localStorage.setItem("fln-progress", JSON.stringify(data));
+    };
+
+    const updateDayForGrade = (grade) => {
+        const data = loadProgress();
+        const today = new Date().toDateString();
+
+        if (!data[grade]) {
+            data[grade] = {
+                currentDay: 1,
+                lastUpdated: today
+            };
+        } else {
+            const lastDate = new Date(data[grade].lastUpdated);
+            const now = new Date(today);
+            const diffInDays = Math.floor((now - lastDate) / (1000 * 60 * 60 * 24));
+
+            if (diffInDays > 0) {
+                const newDay = Math.min(60, data[grade].currentDay + diffInDays);
+                data[grade].currentDay = newDay;
+                data[grade].lastUpdated = today;
+            }
+        }
+
+        saveProgress(data);
+        setDay(data[grade].currentDay);
+        setJumpDay(String(data[grade].currentDay));
+    };
 
     const getLessons = () => {
-        console.log("Fetching lessons for grade:", selectedGrade, "on day:", day);
         if (!selectedGrade || !day) {
             toast.error("Please select a grade and day to fetch lessons.");
             return;
@@ -29,57 +75,48 @@ function FlnView() {
             }
         })
             .then((res) => {
-                console.log("Lessons fetched successfully:", res.data);
                 setLesson(res.data);
                 setLoading(false);
-
             })
-            .catch((err) => {
+            .catch(() => {
                 setLoading(false);
                 toast.error("Failed to fetch lessons. Please reselect the grade and day, then try again.");
-            })
-    }
-
-    const getGrades = () => {
-        axios.get(`${url}/api/fln/grades`)
-            .then((res) => {
-                setGrades(res.data)
-                if (res.data.length > 0 && !localStorage.getItem("fln_grade")) {
-                    setSelectedGrade(res.data[0]);
-                }
-
-            })
-
-
-            .catch((err) => toast.error("Error fetching grades: " + err.message));
+            });
     };
 
     const previousDay = () => {
-        const idx = days.indexOf(effectiveDay);
-        if (idx > 0) {
-            const newDay = days[idx - 1];
-            setDay(newDay);
-            setJumpDay(String(newDay));
-            localStorage.setItem("fln_day", newDay);
+        const data = loadProgress();
+        const current = data[selectedGrade]?.currentDay || 1;
+        if (current > 1) {
+            data[selectedGrade].currentDay = current - 1;
+            saveProgress(data);
+            setDay(current - 1);
+            setJumpDay(String(current - 1));
         }
     };
 
     const nextDay = () => {
-        const idx = days.indexOf(effectiveDay);
-        if (idx < days.length - 1) {
-            const newDay = days[idx + 1];
-            setDay(newDay);
-            setJumpDay(String(newDay));
-            localStorage.setItem("fln_day", newDay);
+        const data = loadProgress();
+        const current = data[selectedGrade]?.currentDay || 1;
+        if (current < 60) {
+            data[selectedGrade].currentDay = current + 1;
+            saveProgress(data);
+            setDay(current + 1);
+            setJumpDay(String(current + 1));
         }
     };
 
     const jumpToDay = (inputDay) => {
         const num = Number(inputDay);
         if (days.includes(num)) {
+            const data = loadProgress();
+            data[selectedGrade] = {
+                currentDay: num,
+                lastUpdated: new Date().toDateString()
+            };
+            saveProgress(data);
             setDay(num);
             setJumpDay(String(num));
-            localStorage.setItem("fln_day", num);
         } else {
             toast.error('Please enter a valid day between 1 and 60');
         }
@@ -98,61 +135,27 @@ function FlnView() {
         if (!selectedGrade) {
             toast.error("Please select a grade to download the Excel file.");
             return;
-        };
-        axios.get(`${url}/api/fln/export-excel`, {
-            params: {
-                grade: selectedGrade
-            }
-        })
-
+        }
         const downloadUrl = `${url}/api/fln/export-excel?grade=${encodeURIComponent(selectedGrade)}`;
-
         window.open(downloadUrl, '_blank');
-
-
     };
-
-    useEffect(() => {
-        const storedDay = Number(localStorage.getItem("fln_day")) || 1;
-        const storedGrade = localStorage.getItem("fln_grade");
-        const lastUpdated = localStorage.getItem("fln_last_updated");
-        const today = new Date().toDateString();
-
-        if (lastUpdated !== today) {
-            const lastDate = new Date(lastUpdated);
-            const now = new Date();
-            const diffInTime = now.getTime() - lastDate.getTime();
-            const diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
-
-            const nextDay = Math.min(storedDay + diffInDays, 60);
-            setDay(nextDay);
-            setJumpDay(String(nextDay));
-            localStorage.setItem("fln_day", nextDay);
-            localStorage.setItem("fln_last_updated", now.toDateString());
-        }
-        else {
-            setDay(storedDay);
-            setJumpDay(String(storedDay));
-        }
-
-        if (storedGrade) {
-            setSelectedGrade(storedGrade);
-        }
-    }, []);
-
-
-    useEffect(() => {
-        if (selectedGrade && day) {
-            getLessons();
-        }
-    }, [selectedGrade, day])
 
     useEffect(() => {
         getGrades();
     }, []);
 
+    useEffect(() => {
+        if (selectedGrade) {
+            localStorage.setItem("fln_grade", selectedGrade);
+            updateDayForGrade(selectedGrade);
+        }
+    }, [selectedGrade]);
 
-
+    useEffect(() => {
+        if (selectedGrade && day) {
+            getLessons();
+        }
+    }, [selectedGrade, day]);
 
     const parsedJump = Number(jumpDay);
     const isValidJump = !isNaN(parsedJump) && parsedJump >= 1 && parsedJump <= 60;
@@ -175,7 +178,6 @@ function FlnView() {
                 </div>
             </div>
 
-            {/* Sticky header section */}
             <div id='sticky-header'>
                 <div id='fln-book'>
                     <h1 style={{ color: '#0077cc' }}>📘 FLN Teacher Resources</h1>
@@ -186,14 +188,9 @@ function FlnView() {
                         <select
                             id='grade-select'
                             value={selectedGrade}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                setSelectedGrade(value);
-                                localStorage.setItem("fln_grade", value);
-                            }}
+                            onChange={(e) => setSelectedGrade(e.target.value)}
                             style={{ lineHeight: '50px' }}
                         >
-
                             <option value=''>Select Grade</option>
                             {grades.map((grade, index) => (
                                 <option key={index} value={grade}>{grade}</option>
@@ -230,17 +227,14 @@ function FlnView() {
                     </div>
                 </div>
                 <div style={{ width: '90%', marginLeft: '5%' }}><hr /></div>
-
             </div>
 
-
-            {/* Scrollable content section */}
             <div id='content-container'>
                 <div id='display-container' className='fade-slide-in'>
                     {loading ? (
                         <div style={{ color: 'black', padding: '20px' }}>Loading...</div>
                     ) : lesson ? (
-                        <div id='display' >
+                        <div id='display'>
                             <h3 style={{ marginTop: '10px', color: '#0077cc' }}>
                                 Day {lesson.day} - {lesson.grade}
                             </h3>
@@ -263,7 +257,6 @@ function FlnView() {
                     ) : (
                         <div><p style={{ color: 'gray' }}>No lesson data available yet.</p></div>
                     )}
-
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@
     background-color: white;
     z-index: 100;
     padding-bottom: 10px;
+    margin-left: 5%
 }
 
 
@@ -170,6 +171,12 @@
     margin-bottom: 20px;
 }
 
+button:hover {
+  transform: scale(1.05); /* Slightly zooms the button */
+  transition: transform 0.2s ease-in-out;
+}
+    
+
 
 @keyframes fadeSlideIn {
     0% {
@@ -214,7 +221,6 @@
 
     #fln-book {
         margin-top: 3%;
-        margin-left: 5%;
         font-size: 16px;
     }
 
@@ -436,7 +442,7 @@
 }
 
 /* Tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 900px) {
     #navbar {
         margin-top: 4%;
         height: 45px;
@@ -455,7 +461,6 @@
 
     #fln-book {
         margin-top: 3%;
-        margin-left: 7%;
         font-size: 19px;
     }
 
@@ -463,7 +468,6 @@
         color: gray;
         margin-top: 2px;
         font-size: 14px;
-        margin-left: 1%;
     }
 
     #select-grade {
@@ -531,3 +535,100 @@
 
 
 }
+
+
+@media (min-width: 901px) and (max-width: 1024px) {
+    #navbar {
+        margin-top: 4%;
+        height: 45px;
+    }
+
+    #nav-sik {
+        font-size: 19px;
+        padding: 4px;
+        margin-bottom: -2px;
+        margin-left: 5px;
+    }
+
+    #nav-links {
+        font-size: 15px;
+    }
+
+    #fln-book {
+        margin-top: 3%;
+        font-size: 19px;
+    }
+
+    #fln-book-foundation {
+        color: gray;
+        margin-top: 2px;
+        font-size: 14px;
+        margin-left: 1%;
+    }
+
+    #select-grade {
+        margin-left: 1%;
+        margin-top: 3%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
+        font-size: 16px;
+    }
+
+    #select-grade label {
+        margin: 0;
+    }
+
+    #select-grade select {
+        width: 38%;
+        height: 30px;
+    }
+
+    #jump-to {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 0%;
+        margin-top: 4%;
+
+    }
+
+    #input-jump {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 35px;
+        width: 180%;
+    }
+
+    #jump-btn {
+        margin-left: 2%;
+        padding: 3px 10px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        width: 250px;
+        height: 35px;
+        border-radius: 5px;
+        cursor: pointer;
+
+    }
+
+
+
+    #download {
+        height: 35px;
+        padding: 3px 10px;
+        background-color: #0077cc;
+        color: white;
+        border: none;
+        width: 300px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 11.5%;
+    }
+
+
+}
+
+
